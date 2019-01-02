@@ -16,8 +16,12 @@ Provides fast, reliable and extensible starter for the development of Angular pr
 *   ng-bootstrap/ng-bootstrapv4.0.1(https://github.com/ng-bootstrap/)
 *   angular-v7.1.4
 *   angular/cli-v7.1.4
+*   angular-devkit/build-angularv0.11.4
+*   types/pdfjs-distv0.1.2
+*   pdfjs-distv2.0.943
+*   types/nodev10.12.18
+*   typescriptv3.1.6
 *   Following the best practices.
 *   Ahead-of-Time compilation support.
 *   Official Angular i18n support.
 *   Production and development builds.
-
