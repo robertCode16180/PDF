@@ -1,0 +1,39 @@
+<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
+    <div class="list-group">
+        <a routerLink="/home" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fas fa-home"></i>&nbsp; Inicio
+        </a>
+
+        <a routerLink="/agregar-documentos" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fas fa-file-upload"></i>&nbsp; Agregar Documentos
+        </a>
+
+        <a [routerLink]="['/firmar-documentos']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fas fa-pen-alt"></i>&nbsp; Firmar Documentos
+        </a>
+
+        <a [routerLink]="['/validar-documentos']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fas fa-award"></i>&nbsp; Validar Documentos
+        </a>
+
+        <div class="nested-menu">
+            <a class="list-group-item" (click)="addExpandClass('pages')" [routerLinkActive]="['router-link-active']">
+                <span><i class="fas fa-folder"></i>&nbsp; Mis Documentos</span>
+            </a>
+            <li class="nested" [class.expand]="showMenu === 'pages'">
+                <ul class="submenu">
+                    <li>
+                        <a [routerLink]="['/documentos-guardados']" [routerLinkActive]="['router-link-active']"><span><i class="fas fa-save"></i>&nbsp; Guardados</span></a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/documentos-firmados']" [routerLinkActive]="['router-link-active']"><span><i class="fas fa-file-contract"></i>&nbsp; Firmados</span></a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/documentos-validados']" [routerLinkActive]="['router-link-active']"><span><i class="fas fa-award"></i>&nbsp; Validados</span></a>
+                    </li>
+                </ul>
+            </li>
+        </div>
+
+    </div>
+</nav>

@@ -1,0 +1,80 @@
+
+<div class="filter-refresh-ngx">
+        <mat-form-field class="mat-width">
+                <input matInput placeholder='Buscar...' (keyup)='updateFilter($event)' />
+        </mat-form-field>
+        <button mat-raised-button (click)="Refresh()">
+                <i class="fas fa-sync-alt"></i>
+        </button>
+</div>
+
+<ngx-datatable #table class='material' [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+        [rowHeight]="'auto'" [limit]="5" [rows]='rows | async' [loadingIndicator]="loadingIndicator" [messages]="{emptyMessage: 'No hay resultados disponibles.'}"
+        [selectionType]="'single'" (select)='onSelect($event)' (activate)="onActivate($event)">
+
+        <!-- Column Templates -->
+
+        <ngx-datatable-column name="ID" sortable="true" prop="id" [width]="10">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                        <strong>{{value}}</strong>
+                </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Nombre Documento" sortable="true" prop="nombre" [flexGrow]="1">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                        <strong>{{value}}</strong>
+                </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Destinatario" sortable="true" prop="usuario" [flexGrow]="1" [width]="70">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                        <strong>{{value}}</strong>
+                </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Firmado" sortable="false" prop="firmado" [flexGrow]="1" [width]="30">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                        <strong>{{value}}</strong>
+                </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Validado" sortable="false" prop="validado" [flexGrow]="1" [width]="30">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                        <strong>{{value}}</strong>
+                </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Propietario" sortable="false" prop="propietario" [flexGrow]="1" [width]="70">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                        <strong>{{value}}</strong>
+                </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="{{titleColumn}}" sortable="false" prop="id" [flexGrow]="1" [width]="100">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                        <button mat-raised-button color="primary" (click)="GetRow()">
+                                <i class="fas fa-file-alt"></i>
+                        </button>
+                </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Detalle" sortable="false" prop="id" [flexGrow]="1" [width]="60">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                        <button mat-raised-button color="primary" (click)="verDetalle()">
+                                <i class="fab fa-sistrix"></i>
+                        </button>
+                </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column *ngIf="DeleteButton" name="Anular" sortable="false" prop="owner" [flexGrow]="1"
+                [width]="60">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                        <button *ngIf="value" mat-raised-button color="warn" (click)="Anular()">
+                                <i class="fas fa-trash-alt"></i>
+                        </button>
+                </ng-template>
+        </ngx-datatable-column>
+
+</ngx-datatable>
+
+

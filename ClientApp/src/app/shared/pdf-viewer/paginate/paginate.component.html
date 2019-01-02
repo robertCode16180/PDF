@@ -1,0 +1,11 @@
+<div class="pdf-toolbar">
+  <button (click)="changePage(-1)" [disabled]="!pageLoaded || !leftPageButton" [ngClass]="{'disabled-toolbar': !pageLoaded || !leftPageButton}" class="toolbarButton">
+      <i class="fas fa-angle-left"></i>
+  </button>
+  
+  <div class="toolbarButton number-pag"> {{numberPage}} de {{numPages}} </div>
+
+  <button #buttonLeft (click)="changePage(1)" [disabled]="!pageLoaded || !rightPageButton" [ngClass]="{'disabled-toolbar': !pageLoaded || !rightPageButton }" class="toolbarButton">
+      <i class="fas fa-angle-right"></i>
+  </button>
+</div>

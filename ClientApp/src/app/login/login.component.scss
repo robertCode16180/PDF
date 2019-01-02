@@ -1,0 +1,117 @@
+$topnav-background-color: #222;
+:host {
+    display: block;
+}
+.login-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    background: $topnav-background-color;
+    text-align: center;
+    color: #fff;
+    padding: 5em;
+    .col-lg-4 {
+        padding: 0;
+    }
+    .icon-login{
+        font-size: 50px;
+    }
+    .ng-tns-c1-0{
+        margin-top:unset !important;
+        margin-bottom: 10px;
+    }
+    .input-lg {
+        height: 46px;
+        padding: 6px 20px;
+        font-size: 20px !important;
+        line-height: 1.3333333;
+        border-radius: 0;
+    }
+    .input-underline {
+        background: 0 0;
+        border: none;
+        box-shadow: none;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+        color: #fff;
+        border-radius: 0;
+    }
+    .input-underline:focus {
+        border-bottom: 2px solid #fff;
+        box-shadow: none;
+    }
+    .rounded-btn {
+        -webkit-border-radius: 7px;
+        border-radius: 7px;
+        color: rgba(255, 255, 255, 0.8);
+        background: $topnav-background-color;
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        font-size: 18px;
+        line-height: 40px;
+        padding: 0 25px;
+    }
+    .rounded-btn:hover,
+    .rounded-btn:focus,
+    .rounded-btn:active,
+    .rounded-btn:visited {
+        color: rgba(255, 255, 255, 1);
+        border: 3px solid rgba(255, 255, 255, 1);
+        outline: none;
+    }
+
+    h1 {
+        font-weight: 300;
+        margin-bottom: 10px;
+        font-size: 36px;
+        small {
+            color: rgba(255, 255, 255, 0.7);
+        }
+    }
+
+    .form-content {
+        padding-top: 1.5em;
+        margin-bottom: 0;
+        height: 215px;
+        box-sizing: content-box;
+        .input-content{
+            height: 50%;
+            .form-group {
+                padding: 0 1em;
+                margin-bottom: 0;
+                input::-webkit-input-placeholder, 
+                input:-moz-placeholder,
+                input:-moz-placeholder,
+                input:-ms-input-placeholder {
+                    color: rgba(255, 255, 255, 0.6) !important;
+                }
+                :host /deep/ .input-login
+                {  
+                    background: #fff;
+                        display: none;
+                    .mat-form-field-wrapper{
+                    
+                        background: #fff;
+                        display: none;
+                    }
+                }
+            }
+            .required-message{
+                font-size: 18px;
+                text-align: left;
+                padding-left: 2em;
+                padding-top: .5em;
+            }
+        }  
+    }
+}
+
+.btn-basic{
+    padding: .2em 1em;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+
+

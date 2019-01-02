@@ -1,0 +1,33 @@
+<ngx-datatable #table class='material' 
+                      [columnMode]="'force'" 
+                      [headerHeight]="50" 
+                      [footerHeight]="50"
+                      [rowHeight]="'auto'" 
+                      [limit]="8" 
+                      [rows]="(listaDetalle$ | async) || []"
+                      [messages]="{emptyMessage: 'No hay resultados disponibles.'}"
+                      [loadingIndicator]="loadingIndicator" 
+                      [selectionType]="'single'">
+
+<!-- Column Templates -->
+
+<ngx-datatable-column name="Accion" sortable="false" prop="accion" [flexGrow]="1">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+                <strong>{{value}}</strong>
+        </ng-template>
+</ngx-datatable-column>
+
+<ngx-datatable-column name="Información" sortable="false" prop="informacion" [flexGrow]="1"
+        [width]="70">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+                <strong>{{value}}</strong>
+        </ng-template>
+</ngx-datatable-column>
+
+<ngx-datatable-column name="Fecha" sortable="false" prop="fecha" [flexGrow]="1" [width]="55">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+                <strong>{{value}}</strong>
+        </ng-template>
+</ngx-datatable-column>
+
+</ngx-datatable>

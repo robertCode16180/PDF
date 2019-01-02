@@ -1,0 +1,168 @@
+/* app.scss You can add global styles to this file, and also import other style files */
+@import "bootstrap/bootstrap"; 
+@import "spinner";
+@import "utils";
+@import "responsive";
+
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/material.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+@media print {
+    .breadcrumb {
+        display: none !important;
+    }
+}
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+.btn:focus, .btn:active, button:focus, button:active {
+    outline: none !important;
+    box-shadow: none;
+}
+
+.btn-row{
+    font-size: 1.5rem !important;
+    line-height: .5 !important;
+    min-width: 56px !important;
+}
+
+.txt-bold{
+    font-weight: 500;
+    font-size: 18px;
+    span{
+        color: #cb3837;
+        font-weight: 700;
+        width: 100%;
+        display: block;
+        margin: 1.5em 0;
+    }
+}
+
+.text-red{
+    color: #cb3837;
+    font-weight: 600;
+}
+
+.txt-upload{
+    text-align: center;
+}
+
+@media (min-width:576px){
+    
+    .modal-dialog .modal-xl{
+        width:95% !important;
+    }
+}
+
+.modal-footer button{
+    max-width: 120px !important;
+    min-width: 85px !important;
+    font-weight: 600;
+}
+
+.modal-footer > :not(:last-child){
+    margin-right: .55rem !important;
+}
+
+.modal-body-pdf{
+    padding: 0;
+}
+
+.form-control{
+    padding: 0.3rem 0.5rem !important;
+    font-size: .8em !important;
+}
+
+.form-modal{
+    width: 50%;
+    margin: auto;
+    padding-bottom: 1.25em;
+    input{
+        margin-bottom: 1em;
+        height: 2em;
+        font-size: 18px !important;
+        font-weight: 400;
+        text-transform: uppercase;
+    }
+}
+
+.modal-body-form {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 2rem 1.5em 1em;
+}
+
+.modal-body-form .group { 
+    position: relative;
+    margin: 1.25em 0 15px;
+    display: flex;
+}
+
+.modal-body-form .group .btn-modal{
+    margin-left: 1.5em;
+}
+
+:host ::ng-deep .mat-form-field .mat-form-field-wrapper{
+    padding-bottom: 0 !important;
+    .mat-form-field-flex {
+        .mat-form-field-infix{
+
+            display: flex !important;
+        
+        }
+    }
+}
+
+.container-input-mat{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: auto;
+}
+
+.container-container > * {
+    width: 80% !important;
+}
+
+.error-msg-mat{
+    color: #f44336;
+    font-weight: bold;
+    p{
+       text-align: center;
+    }
+}
+
+.mat-spinner-content{
+    padding-bottom: 1em;
+}
+
+/****************/
+
+.cell-input{
+    display: flex;
+    justify-content: center;
+}
+
+.flex-end{
+    margin-top: 1em;
+    display: flex;
+    justify-content: flex-end;
+    padding: .5em 2em 1.5em;
+}
+/*************** MODAL PDF CONFIG ****************/
+
+.modal-header-pdf{
+    display: flex;
+    justify-content: space-between;
+    padding: .5em 1em;
+    h4{
+        font-size: 1.3rem !important;
+    }
+}

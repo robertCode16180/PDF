@@ -1,0 +1,130 @@
+<div class="content-toolbar">
+
+    <pdf-paginate [numberPage]="numberPage" [numPages]="numPages" [DocumentLoaded]="documentLoaded" (onChangePage)="changePage($event)">
+    </pdf-paginate>
+
+    <div class="signar-items">
+        <div class="item-content" *ngIf="Documento.owner && buttonAgregar">
+            <button (click)="ActiveToolBox()" [disabled]="!documentLoaded || (savedPoint === 'waiting')" [ngClass]="{'disabled-toolbar':!documentLoaded || isActiveToolBox() || (savedPoint === 'waiting')}"
+                class="toolbarButton" type="button">
+                <span class="fas fa-user-edit"></span>
+                <span class="texToolbar" tooltip="Agregar Firmantes">Agregar</span>
+            </button>
+        </div>
+        <div class="item-content" *ngIf="buttonFirmar">
+            <button (click)="openModal('confirm')" [disabled]="!documentLoaded || !(getCanSignState() | async)"
+                [ngClass]="{'disabled-toolbar': !documentLoaded || !(getCanSignState() | async)}" type="button" class="toolbarButton">
+                <span class="fas fa-file-signature"></span>
+                <span class="texToolbar">Firmar</span>
+            </button>
+        </div>
+        <div class="item-content" *ngIf="Documento.owner && buttonValidar">
+            <button type="button" (click)="openModal('validar')" [disabled]="!documentLoaded" [ngClass]="{'disabled-toolbar': !documentLoaded}"
+                class="toolbarButton">
+                <span class="fas fa-certificate"></span>
+                <span class="texToolbar">Validar</span>
+            </button>
+        </div>
+    </div>
+
+    <div ngbDropdown class="toolbar-zoom" *ngIf="!buttonFirmar">
+        <button class="btn toolbarButton" ngbDropdownToggle [disabled]="!documentLoaded"><i class="fas fa-search-plus"></i></button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic">
+            <button class="dropdown-item" [class.active]="zoom === 1.75" (click)="ChangingZoom(1.75)">175%</button>
+            <button class="dropdown-item" [class.active]="zoom === 1.5" (click)="ChangingZoom(1.5)">150%</button>
+            <button class="dropdown-item" [class.active]="zoom === 1.25" (click)="ChangingZoom(1.25)">125%</button>
+            <button class="dropdown-item" [class.active]="zoom === 1" (click)="ChangingZoom(1)">100%</button>
+            <button class="dropdown-item" [class.active]="zoom === 0.75" (click)="ChangingZoom(0.75)">75%</button>
+            <button class="dropdown-item" [class.active]="zoom === 0.5" (click)="ChangingZoom(0.5)">50%</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="content-pdf">
+    <div [hidden]="progressBarSuccess" class="progress progress-bar-striped progress-bar-animated">
+        <div class="progress-bar" [style.width]="progressBar + '%'"></div>
+    </div>
+
+    <div #viewerContainer class="viewer-container">
+
+        <div class="viewer">
+            <!-- Page PDF Content -->
+            <div #pageContainer [ngClass]="{'page-pdf' : documentLoaded}" [style.width.px]="pageContainerUnique.width" [style.height.px]="pageContainerUnique.height">
+                <div class="canvas-wrapper" #canvasWrapper>
+                    <div class="spinner" *ngIf="onReload"></div>
+
+                    <!-- Coordenada Points Firmantes -->
+                    <div class="Wrapper-tools" *ngIf="showItemsTools">
+                        <ng-container *ngFor="let Point of (getCoordenadasHTML() | async); let index=index;">
+                            <div *ngIf="(Point.pagina == numberPage)" class="point-signature" [ngClass]="{'cursor-dragging': Documento.owner && !WaitingService}"
+                                [ngDraggable]="draggable" 
+                                [bounds]="canvasWrapper" 
+                                [inBounds]="true"
+                                [position]="Point.coordenadaHTML" 
+                                [preventDefaultEvent]="true" 
+                                [scale]="1"
+                                (stopped)="onStopPoint(index)" 
+                                (endOffset)="onMovePointFirmante($event, index)">
+
+                                <div class="tooltip-menu-box" *ngIf="Documento.owner">
+                                    <button style="font-weight: 600;" (click)="AgregarCoordenada(Point)" [disabled]="(Point.onStoped && !Point.isMoved && Point.onInit) || (Point.onStoped && Point.modified && !Point.isMoved) || WaitingService"
+                                        type="button">
+                                        Guardar
+                                    </button>
+                                    <button (click)="AnulaCoordenada(Point)" [disabled]="WaitingService" type="button">
+                                        <span class="fas fa-trash-alt"></span>
+                                        <span class="texToolbar" tooltip="Agregar Firmantes"></span>
+                                    </button>
+                                </div>
+                                <div class="content-point" [ngClass]="{'content-point-dragging': Documento.owner && !WaitingService}">
+                                    <div class="point-info">
+                                        <p><ins>{{ Point.firmante }}</ins></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <!-- End -->
+
+                    <!-- Render PDF Page -->
+                    <canvas class="page-canvas" #canvas></canvas>
+                    <!-- End -->
+
+                </div><!-- End PDF Content -->
+
+                <!-- MovableArea tool-box PDF -->
+                <div *ngIf="isActiveToolBox() && (savedPoint === 'completed' || savedPoint === 'no') && showItemsTools"
+                    class="wrapper-tool-box">
+                    <div class="item-tool-box back-transparent" #HandleBox 
+                        [ngDraggable]="draggable"  
+                        (endOffset)="SetPositionToolBox($event, index)"
+                        [bounds]="canvasWrapper" 
+                        [inBounds]="true" 
+                        [handle]="HandleBox">
+                        <div class="tooltip-menu-box">
+                            <button (click)="openModal('agregar')" tittle="Agregar Firmantes a Documento" type="button">
+                                <span class="fas fa-user-plus"></span>
+                                <span class="texToolbar" tooltip="Agregar Firmantes"></span>
+                            </button>
+                            <button (click)="ActiveToolBox()">
+                                <span style="font-weight: 900;">&times;</span>
+                            </button>
+                        </div>
+                        <div class="icon-signature">
+                            <i class="fas fa-signature"></i>
+                            <i class="fas fa-pen-alt"></i>
+                        </div>
+                        <div class="line-sig"></div>
+                    </div>
+                </div><!-- END TOOL BOX PDF -->
+            </div>
+
+            <div *ngIf="loadingContainer" class="loading-container">
+                <mat-spinner></mat-spinner>
+            </div>
+
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,20 @@
+{
+    "Dashboard": "Dashboard",
+    "Agregar" : "Add Document",
+    "Firmar" : "Sign documents",
+    "MisDocumentos" : "Mis Documentos",
+    "MisDocumentosGuardados" : "Guardados",
+    "MisDocumentosFirmados" : "Firmados",
+    "Language": "Language",
+    "English": "English",
+    "French": "French",
+    "Spanish": "Spanish",
+    "Search" : "Search",
+    "Settings" : "Settings",
+    "Profile" : "Profile",
+    "Log Out" : "Log Out",
+    "Pending Task" : "Pending Task",
+    "In queue" : "In queue",
+    "Mail" : "Mail",
+    "View All" : "View All"
+}

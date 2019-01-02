@@ -1,0 +1,90 @@
+<file-drop (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)">
+    <!-- (onFileLeave)="fileLeave($event)" -->
+    <div class="message-file-content">
+        <label for="file-input-upload" class="ico-content-upload btn" data-toggle="tooltip" data-placement="top" title="Agrege un archivo PDF">
+            <i class="fas fa-file-upload"></i>
+        </label>
+        <span>Arrastre y Suelte el archivo PDF aqu&iacute;</span>
+        <input type="file" [disabled]="sendingFile" #fileInput (change)="onFileInputChange($event.target.files)" id="file-input-upload"
+            accept=".pdf" />
+    </div>
+</file-drop>
+
+<table class="card-body table table-hover">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Tamaño</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>{{ UploadFile.name }}</strong></td>
+            <td><strong>{{ UploadFile.size | ConvertSize }}</strong></td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="content-btn-file">
+    <button type="button" mat-raised-button color="primary" [disabled]="!buttonSave" (click)="openDestinatarioModal()">Guardar</button>
+    <button type="button" mat-raised-button color="warn" [disabled]="!buttonRemove" (click)="removeFile()">Remover</button>
+</div>
+
+<div *ngIf="alertShown" class="alert-file-format">
+    <p>{{ alertMsg }}</p>
+</div>
+
+<ng-template #DestinatarioModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Signar</h4>
+    </div>
+    <div class="modal-body-form">
+        <form [formGroup]="FormDestinatario" (ngSubmit)="guardarDocumento($event)"novalidate>
+
+                <div *ngIf="!sendingFile; else uploadFile">
+                    <div class="container-input-mat">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Agregar destinatario:</mat-label>
+                            <input matInput type="text" #destinatario [formControl]="destinatarioCtrl" (keyup)="onKey(destinatario.value, destinatario)" maxlength="15"
+                                appFileAutofocus required>
+                                <mat-spinner matSuffix *ngIf="(destinatarioCtrl.statusChanges | async) && destinatarioCtrl.valid && showSpinner" diameter="19"></mat-spinner>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="error-msg-mat">
+                        <p *ngIf="!userValid && (destinatarioCtrl.statusChanges | async)">{{Message}}</p>
+                        <p *ngIf="destinatarioCtrl.invalid && (destinatarioCtrl.statusChanges | async)">Solo caracteres alfanuméricos sin espacios</p>
+                    </div>
+                </div>
+                <ng-template #uploadFile>
+                    <p class="txt-upload">Subiendo Archivo...</p>
+                    <div class="mat-spinner-content">
+                        <mat-spinner value="indeterminate" [diameter]="60" style="margin:0 auto;"></mat-spinner>
+                    </div>   
+                </ng-template>
+          
+            <div class="modal-footer">
+                <button type="button" [disabled]="!userValid || destinatarioCtrl.invalid"
+                    mat-raised-button color="primary" (click)="guardarDocumento($event)">Agregar</button>
+                <button type="button" [disabled]="sendingFile" mat-raised-button color="warn" (click)="DestinatarioModalRef.hide()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #messageModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{title}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+            <span aria-hidden="true">Cerrar &times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="modal-content-msg">
+            <div [innerHTML]="content"></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" mat-raised-button color="primary" (click)="reloadDatatable()">Aceptar</button>
+        </div>
+    </div>
+</ng-template>

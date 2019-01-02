@@ -1,0 +1,88 @@
+.message-file-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: larger;
+}
+
+.fas{
+    font-size: 2em;
+}
+
+.drop-zone{
+    border-radius: 4px !important;
+}
+
+.ico-content-upload{
+    cursor: pointer;
+    margin: 0;
+    min-width: 100px;
+    font-size: .85rem !important;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.ico-content-upload:hover{
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+
+#file-input-upload{
+    display: none;
+}
+
+.content-btn-file{
+    margin: 1em 0;
+    display: flex;
+    justify-content: flex-end;
+    button{
+        margin-right: 1em;
+    }
+}
+
+.content-btn-file .input-group-text{
+    font-size: 0.85em !important;
+}
+.input-group .form-control{
+    width: 25% !important;
+    flex: unset !important;
+}
+
+.table{
+    margin: unset !important;
+
+    th, td{
+        padding: .5rem !important;
+        border-top: none !important;
+    }
+    th:first-child{
+        width: 80%;
+    }
+    tbody tr{
+        height: 45px;
+    }
+}
+
+.alert-file-format{
+    background-color: unset !important;
+}
+
+.alert-file-format p{
+    color: #f44336;
+    font-weight: bold;
+    margin: unset !important;
+}
+
+.hide-row-file{
+    display: none;
+}
+
+.show-row-file{
+    display: block;
+}
+
+.mat-spinner::ng-deep circle {
+    // stroke: #fff;
+}

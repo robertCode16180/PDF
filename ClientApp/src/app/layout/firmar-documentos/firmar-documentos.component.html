@@ -1,0 +1,132 @@
+<div [@routerTransition]>
+
+    <app-page-header [heading]="'Firmar Documentos'" [icon]="'fas fa-pen-alt'"></app-page-header>
+    <div class="row">
+        <div class="col col-xl-12">
+            <div class="card mb-3">
+
+                <ngx-data-table [filtro]="'EnEspera'"
+                                [titleColumn]="'Gestión Documento'" 
+                                [reloadTable]="reloadTable"
+                                (SelectedDocumento)="openGestionPDFModal($event)"
+                                (detalleDocumento)="detalleDocumento($event)">
+                </ngx-data-table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ******************** -->
+<!-- **** RENDER PDF **** -->
+<!-- ******************** -->
+<ng-template #GestionPDFModal>
+    <div class="modal-header-pdf">
+        <h4 class="modal-title pull-left">{{titleModal}}
+            <span class="text-red">{{Documento.nombre}}</span> &nbsp;&nbsp;
+            Propietario: <span class="text-red"> {{Documento.propietario}}</span> (id: {{Documento.id}})
+        </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="firmarModalRef.hide()">
+            <!-- (onHidden)="handler('onHidden', $event)" -->
+            <span aria-hidden="true">Cerrar &times;</span>
+        </button>
+    </div>
+    <div class="modal-body-pdf">
+        <!-- Render PDF content into modal [CoordenadasFirma]="CoordenadasFirma"  -->
+        <ngx-pdf-viewer [(Documento)]="Documento" [CoordenadasService]="true" [Firmante]="Firmante" [buttonAgregar]="true"
+            [buttonFirmar]="true" [Firmado]="Firmado" (openModalAgregar)="openAgregarFirmantes()" (openModalConfirm)="openConfirm()"
+            (openModalMessage)="openModalMessage($event)">
+        </ngx-pdf-viewer>
+    </div>
+</ng-template>
+
+
+<!-- ********************************** -->
+<!-- **** RENDER DETALLE DOCUMENTO **** -->
+<!-- ********************************** -->
+<ng-template #detalleModal>
+    <div class="modal-header-pdf">
+        <h4 class="modal-title pull-left"> Detalle Documento <span class="text-red">{{Documento.nombre}}</span> &nbsp;&nbsp; Propietario: <span class="text-red"> {{Documento.propietario}}</span> (id: {{Documento.id}})</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="detalleModalRef.hide()">
+            <span aria-hidden="true">Cerrar &times;</span>
+        </button>
+    </div>
+    
+    <div class="modal-body-detalle">
+        <ngx-data-table-detalle [Documento]="Documento">
+        </ngx-data-table-detalle>
+    </div>
+</ng-template>
+
+<ng-template #AgregarFirmantesModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Signar</h4>
+    </div>
+    <div class="modal-body-form">
+
+        <p class="txt-bold">Documento: {{Documento.nombre}}</p>
+
+        <form [formGroup]="FormFirmante" (ngSubmit)="AgregarFirmaCoordenada($event)" novalidate>
+          
+            <div class="container-input-mat">
+                <div class="item-input">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Agregar Firmante</mat-label>
+                        <input matInput type="text" #firmante [formControl]="nombreFirmanteCtrl" (keyup)="onKey(firmante.value)" maxlength="15"
+                            appAutofocus required>
+                        <mat-spinner matSuffix *ngIf="(nombreFirmanteCtrl.statusChanges | async) && nombreFirmanteCtrl.valid && showSpinner" diameter="19"></mat-spinner>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="error-msg-mat">
+                <p *ngIf="!userValid && (nombreFirmanteCtrl.statusChanges | async)">{{Message}}</p>
+                <p *ngIf="nombreFirmanteCtrl.invalid && (nombreFirmanteCtrl.statusChanges | async)">Solo caracteres alfanuméricos sin espacios</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" mat-raised-button color="primary" (click)="AgregarFirmaCoordenada()" [disabled]="!userValid || nombreFirmanteCtrl.invalid"
+                    type="button">Agregar</button>
+                    <button type="button" mat-raised-button color="warn" (click)="agregarFirmantesModalRef.hide()">Cancelar</button>    
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #confirmModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Aviso, leea antes de confirmar.</h4>
+    </div>
+    <div class="modal-body">
+        <div *ngIf="!sendingFile; else uploadFile">
+            <p class="txt-bold">Est&aacute; seguro que desea firmar el siguiente documento?: <span>{{Documento.nombre}}</span></p>
+        </div>
+        <ng-template #uploadFile>
+            <p class="txt-upload">Espere un momento...</p>
+            <div class="mat-spinner-content">
+                <mat-spinner value="indeterminate" [diameter]="60" style="margin:0 auto;"></mat-spinner>
+            </div>   
+        </ng-template>
+        <div class="modal-footer">
+            <button type="button" mat-raised-button color="primary" (click)="FirmarDocumento()" [disabled]="sendingFile">Si</button>
+            <button type="button" mat-raised-button color="warn" (click)="confirmModalRef.hide()" [disabled]="sendingFile">Cancelar</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #messageModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{titleMessage}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="messageModalRef.hide()">
+            <span aria-hidden="true">Cerrar &times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="modal-content-msg">
+            <div [innerHTML]="content"></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" mat-raised-button color="primary" (click)="messageModalRef.hide()">Aceptar</button>
+        </div>
+    </div>
+</ng-template>

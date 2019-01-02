@@ -1,0 +1,94 @@
+<div [@routerTransition]>
+
+    <app-page-header [heading]="'Validar Documentos'" [icon]="'fas fa-award'"></app-page-header>
+
+    <div class="row">
+        <div class="col col-xl-12">
+            <div class="card mb-3">
+
+                <ngx-data-table [filtro]="'Firmados'" 
+                                [titleColumn]="'Gestión Documento'" 
+                                [reloadTable]="reloadTable"    
+                                (SelectedDocumento)="openValidarPDFModal($event)"
+                                (detalleDocumento)="detalleDocumento($event)">
+                </ngx-data-table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ******************** -->
+<!-- **** RENDER PDF **** -->
+<!-- ******************** -->
+<ng-template #templateValidarModal>
+    <div class="modal-header-pdf">
+        <h4 class="modal-title pull-left">{{titleModal}} <span class="text-red">{{Documento.nombre}}</span> &nbsp;&nbsp; Propietario: <span class="text-red"> {{Documento.propietario}}</span> (id: {{Documento.id}})</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="bsValidarModalRef.hide()">
+            <!-- (onHidden)="handler('onHidden', $event)" -->
+            <span aria-hidden="true">Cerrar &times;</span>
+        </button>
+    </div>
+    <div class="modal-body-pdf">
+        <!-- Render PDF content into modal -->
+        <ngx-pdf-viewer [Documento]="Documento" [buttonValidar]="true" (openModalValidar)="openConfirmarValidar()">
+        </ngx-pdf-viewer>
+    </div>
+</ng-template>
+
+<!-- ********************************** -->
+<!-- **** RENDER DETALLE DOCUMENTO **** -->
+<!-- ********************************** -->
+<ng-template #detalleModal>
+    <div class="modal-header-pdf">
+        <h4 class="modal-title pull-left"> Detalle Documento <span class="text-red">{{Documento.nombre}}</span> &nbsp;&nbsp; Propietario: <span class="text-red"> {{Documento.propietario}}</span> (id: {{Documento.id}})</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="detalleModalRef.hide()">
+            <span aria-hidden="true">Cerrar &times;</span>
+        </button>
+    </div>
+    
+    <div class="modal-body-detalle">
+        <ngx-data-table-detalle [Documento]="Documento">
+        </ngx-data-table-detalle>
+    </div>
+</ng-template>
+
+<ng-template #confirmValidarModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Aviso, leer antes de confirmar.</h4>
+    </div>
+    <div class="modal-body">
+
+        <div *ngIf="!sendingFile; else uploadFile">
+            <p class="txt-bold">Est&aacute; seguro que desea Validar el siguiente documento?: <span>{{Documento.nombre}}</span></p>
+        </div>
+        <ng-template #uploadFile>
+            <p class="txt-upload">Espere un momento...</p>
+            <div class="mat-spinner-content">
+                <mat-spinner value="indeterminate" [diameter]="60" style="margin:0 auto;"></mat-spinner>
+            </div>   
+        </ng-template>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="ValidarDocumento()" [disabled]="sendingFile">Si</button>
+            <button type="button" class="btn btn-danger" (click)="bsConfirmModalRef.hide()" [disabled]="sendingFile">Cancelar</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #messageModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{titleMessage}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+            <span aria-hidden="true">Cerrar &times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="modal-content-msg">
+            <div [innerHTML]="content"></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="bsModalRef.hide()">Aceptar</button>
+        </div>
+    </div>
+</ng-template>

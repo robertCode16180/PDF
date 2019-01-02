@@ -1,0 +1,24 @@
+<div [@routerTransition]>
+    <h2 class="text-muted">Bienvenido</h2>
+    <hr>
+    <h3 class="text-muted"><small>Resumen</small></h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 col-lg-4">
+                <app-stat [bgClass]="'dark'" [icon]="'fas fa-file-alt'" [count]="26" [routerLink]="'/documentos-guardados'" [label]="'Documentos Guardados'"></app-stat>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+                <app-stat [bgClass]="'warning'" [icon]="'fa-tasks'" [count]="12" [routerLink]="'/documentos-guardados'" [label]="'Documentos por Firmar'"></app-stat>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+                <app-stat [bgClass]="'info'" [icon]="'fas fa-file-contract'" [routerLink]="'/documentos-firmados'" [count]="4" [label]="'Documentos Firmados'"></app-stat>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-4 col-lg-4">
+                <app-stat [bgClass]="'success'" [icon]="'fas fa-file-archive'" [count]="4" [routerLink]="'/documentos-validados'" [label]="'Documentos Validados'"></app-stat>
+            </div>
+        </div>
+    </div>
+</div>

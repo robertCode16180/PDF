@@ -1,0 +1,19 @@
+{
+    "Dashboard": "Principal",
+    "Agregar" : "Agregar Documentos",
+    "Firmar" : "Firmar Documentos",
+    "MisDocumentos" : "Mis Documentos",
+    "MisDocumentosGuardados" : "Guardados",
+    "MisDocumentosFirmados" : "Firmados",
+    "Language": "Idioma",
+    "English": "Inglés",
+    "French": "Francés",
+    "Spanish": "Español",
+    "Search" : "Búsqueda",
+    "Settings" : "Ajustes",
+    "Profile" : "Perfil Usuario",
+    "Log Out" : "Cerrar Sesión",
+    "In queue" : "En espera",
+    "Mail" : "Correo",
+    "View All" : "Ver todo"
+}
