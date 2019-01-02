@@ -1,8 +1,7 @@
-# SB Admin rewritten in Angular6 and Bootstrap 4
+# SB Admin rewritten in Angular7 and Bootstrap 4
 
 Simple Dashboard Admin App built using Angular 6 and Bootstrap 4
 
-This project is a port of the famous Free Admin Bootstrap Theme [SB Admin v6.0](http://startbootstrap.com/template-overviews/sb-admin-2/) to Angular5 Theme.
 
 ## [SB Admin Material version](https://github.com/start-javascript/sb-admin-material)
 
@@ -14,7 +13,7 @@ Provides fast, reliable and extensible starter for the development of Angular pr
 
 `signar-web` provides the following features:
 
-*   Developed using boostrap-v4.0.0
+*   ng-bootstrap/ng-bootstrapv4.0.1
 *   angular-v6.0.0
 *   angular/cli-v6.0.0
 *   [ng-bootstrap-v2.0.0](https://github.com/ng-bootstrap/)
