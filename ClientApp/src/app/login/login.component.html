@@ -10,9 +10,15 @@
                 <div class="form-content">
                     <div class="input-content">
                         <div class="form-group">
-                            <input type="text" #userName [formControl]="userNameCtrl" class="form-control input-underline input-lg" placeholder="Usuario" autofocus required>
+                            <input 
+                                type="text"  
+                                class="form-control input-underline input-lg" 
+                                placeholder="Usuario" 
+                                formControlName="userName"
+                                autofocus 
+                                required>
                         </div>
-                        <div *ngIf="userNameCtrl.invalid && (userNameCtrl.statusChanges | async)" class="required-message">
+                        <div *ngIf="loginForm.controls.userName.invalid && submitted" class="required-message">
                             <span>
                                 Introducir nombre de usuario AD v&aacute;lido
                             </span>
@@ -21,16 +27,21 @@
                     
                     <div class="input-content">
                         <div class="form-group">
-                            <input type="password" [formControl]="passwordCtrl" class="form-control input-underline input-lg" placeholder="Password" required>
+                            <input 
+                                type="password" 
+                                class="form-control input-underline input-lg" 
+                                placeholder="Password" 
+                                formControlName="password"
+                                required>
                         </div>
-                        <div *ngIf="passwordCtrl.invalid && (passwordCtrl.statusChanges | async)" class="required-message">
+                        <div *ngIf="loginForm.controls.password.invalid && submitted" class="required-message">
                             <span>
                                 Contraseña requerida
                             </span>
                         </div>
                     </div>
                 </div>
-                <button mat-raised-button type="submit" class="btn-basic" [disabled]="passwordCtrl.invalid || userNameCtrl.invalid"> Ingresar </button >
+                <button mat-raised-button type="submit" class="btn-basic"> Ingresar </button >
             </form>
         </div>
     </div>
@@ -59,11 +70,3 @@
     color = "#fff"
     type = "ball-clip-rotate">
 </ngx-spinner>
-<!--
-    ball-clip-rotate//default
-    ball-spin-clockwise 
-    ball-spin-clockwise-fade 
-    square-jelly-box
-    timer 
-    pacman
-    -->
